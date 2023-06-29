@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
+use App\Repository\DierRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Env\Request;
@@ -33,6 +34,17 @@ class AnimalController extends AbstractController
             'lastusername' => $lastusername,
             'error' => $error
         ]);
+    }
+    #[Route('/member', name: 'app_member')]
+    public function member(DierRepository $dierRepository): Response
+    {
+        $user = $this->getUser();
+        $beschrijving = $dierRepository->findAll();
+        return $this->render('animal/home.html.twig', [
+            'user' =>$user,
+            'beschrijving' =>$beschrijving
+        ]);
+
     }
 
     #[Route('/register', name: 'register')]

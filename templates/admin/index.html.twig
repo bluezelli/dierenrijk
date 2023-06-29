@@ -16,4 +16,37 @@
         </div>
     </section>
 
+    <table class="table">
+        <thead>
+        <tr>
+        <th class="bg-custom">
+            dieren
+        </th>
+        <th class="bg-custom">
+            beschrijving
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for beschrijving in description %}
+        <tr>
+            <td>
+                {{ beschrijving.name }}
+            </td>
+            <td>
+                {{ beschrijving.description }}
+            </td>
+            <td>
+                <a href="{{ path('delete', {id:beschrijving.id}) }}">verwijder</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+    <button class="btn btn-primary">
+        <a href="{{ path('app_add') }}">toevoegen</a>
+    </button>
+
 {% endblock %}
