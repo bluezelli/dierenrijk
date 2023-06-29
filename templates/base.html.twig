@@ -15,6 +15,20 @@
         {% endblock %}
     </head>
     <body>
+
+    {% block navbar %}
+
+    <div class="navbar">
+        <a href="{{ path('index') }}">Home</a>
+    </div>
+
         {% block body %}{% endblock %}
+
+
+
+
+
+
+    {% endblock %}
     </body>
 </html>
