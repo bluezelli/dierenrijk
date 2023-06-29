@@ -15,7 +15,7 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('roles')
+//            ->add('roles')
             ->add('fname')
             ->add('part')
             ->add('submit', SubmitType::class)

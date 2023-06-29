@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -28,6 +30,14 @@ class User implements UserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Dier::class)]
+    private Collection $dier;
+
+    public function __construct()
+    {
+        $this->dier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +149,36 @@ class User implements UserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dier>
+     */
+    public function getDier(): Collection
+    {
+        return $this->dier;
+    }
+
+    public function addDier(Dier $dier): static
+    {
+        if (!$this->dier->contains($dier)) {
+            $this->dier->add($dier);
+            $dier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDier(Dier $dier): static
+    {
+        if ($this->dier->removeElement($dier)) {
+            // set the owning side to null (unless already changed)
+            if ($dier->getUser() === $this) {
+                $dier->setUser(null);
+            }
+        }
 
         return $this;
     }

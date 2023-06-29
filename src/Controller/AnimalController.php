@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,9 +36,21 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(EntityManagerInterface $em , ): Response
+    public function register(EntityManagerInterface $em , Request $request): Response
     {
-        return new Response('register');
+        $registration = $em->getRepository(User::class);
+        $form = $this->renderForm(RegistrationType::class , (array)$registration);
+        $form->handleRequest($request);
+        if($form->isInvalid() && $form->isSuccessful()){
+            $data = $form->getData();
+            $em->persist($data);
+            $em->flush();
+            return $this->addFlash('succes' , 'registratie toegevoegt');
+            return $this->redirectToRoute('index');
+        }
+        return $this->renderForm('animal/registratie.html.twig', [
+            'form' =>$form
+        ]);
     }
 
     #[Route('/redirect', name: 'redirect')]
