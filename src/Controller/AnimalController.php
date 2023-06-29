@@ -38,8 +38,9 @@ class AnimalController extends AbstractController
     #[Route('/register', name: 'register')]
     public function register(EntityManagerInterface $em , Request $request): Response
     {
-        $registration = $em->getRepository(User::class);
-        $form = $this->renderForm(RegistrationType::class , (array)$registration);
+        $register = new User();
+//        $registration = $em->getRepository(User::class);
+        $form = $this->renderForm(RegistrationType::class , $register);
         $form->handleRequest($request);
         if($form->isInvalid() && $form->isSuccessful()){
             $data = $form->getData();
@@ -54,7 +55,7 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/redirect', name: 'redirect')]
-    public function redirectAction(Security $security)
+    public function redirectAction(Security $security): RedirectResponse
     {
         if($security->isGranted('ROLE_ADMIN')){
             return $this->redirectToRoute('admin');
