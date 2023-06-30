@@ -35,7 +35,7 @@ class AnimalController extends AbstractController
             'error' => $error
         ]);
     }
-    #[Route('/member', name: 'app_member')]
+    #[Route('/member', name: 'member')]
     public function member(DierRepository $dierRepository): Response
     {
         $user = $this->getUser();

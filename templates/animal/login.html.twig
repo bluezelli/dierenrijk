@@ -6,6 +6,7 @@
     {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+    <div class="example-wrapper">
 
     <h1>bla</h1>
 
@@ -17,7 +18,7 @@
                 <input type="hidden" name="_target_path" value="/redirect"/>
                 <button type="submit">login</button>
             </form>
-
+    </div>
 
 
 
