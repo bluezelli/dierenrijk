@@ -19,9 +19,7 @@ class Dier
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dier')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+
 
     public function getId(): ?int
     {
@@ -52,15 +50,5 @@ class Dier
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
 
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }
